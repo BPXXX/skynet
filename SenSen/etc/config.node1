@@ -5,10 +5,10 @@ bootstrap = "snlua bootstrap"
 start = "main"
 harbor = 0
 
-lualoader = "./././lualib/loader.lua"
+lualoader = "./lualib/loader.lua"
 
-luaservice = "././service/?.lua;" .. "././service/?/init.lua;" .. "./././service/?.lua;"
+luaservice = "./service/?.lua;" .. "./SenSen/service/?/init.lua;" .. "./SenSen/service/?.lua;"
 
-lua_path = "././etc/?.lua;" .. "././lualib/?.lua;" .. "./././lualib/?.lua;" .. "./././lualib/?/init.lua;"
+lua_path = "./SenSen/etc/?.lua;" .. "./lualib/?.lua;" .. "./SenSen/lualib/?.lua;" .. "./SenSen/lualib/?/init.lua;"
 
-lua_cpath = "././luaclib/?.so;" .. "./././luaclib/?.so"
+lua_cpath = "./luaclib/?.so;" .. "./SenSen/luaclib/?.so"
