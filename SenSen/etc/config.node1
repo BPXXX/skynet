@@ -1,14 +1,14 @@
 thread = 8
-cpath = "./cservice/?.so"
+cpath = "././cservice/?.so"
 bootstrap = "snlua bootstrap"
 
 start = "main"
 harbor = 0
 
-lualoader = "./lualib/loader.lua"
+lualoader = "./././lualib/loader.lua"
 
-luaservice = "./service/?.lua;" .. "./service/?/init.lua;" .. "././service/?.lua;"
+luaservice = "././service/?.lua;" .. "././service/?/init.lua;" .. "./././service/?.lua;"
 
-lua_path = "./etc/?.lua;" .. "./lualib/?.lua;" .. "././lualib/?.lua;" .. "././lualib/?/init.lua;"
+lua_path = "././etc/?.lua;" .. "././lualib/?.lua;" .. "./././lualib/?.lua;" .. "./././lualib/?/init.lua;"
 
-lua_cpath = "./luaclib/?.so;" .. "././luaclib/?.so"
+lua_cpath = "././luaclib/?.so;" .. "./././luaclib/?.so"
