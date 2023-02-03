@@ -15,8 +15,8 @@ skynet.start(function()
             -- 启动集群节点
             cluster.open("gate")
             -- gate节点，开启gate服务
-            local gate1 = skynet.newservice("gateService", "gateService", 1)
-            skynet.name("gate1", gate1)
+            local gateService1 = skynet.newservice("gateService", "gateService", 1)
+            skynet.name("gateService1", gateService1)
 
         elseif "dsContainer" == mynode then
             -- 启动集群节点
