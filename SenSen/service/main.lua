@@ -6,8 +6,8 @@ skynet.start(function()
 	
 		-- 集群配置
         cluster.reload({
-            gate = "127.0.0.1:7001",
-            dsContainer = "127.0.0.1:7002",
+            gate = "127.0.0.1:7575",
+            dsContainer = "127.0.0.1:7576",
         })
 
         local mynode = skynet.getenv("node")
