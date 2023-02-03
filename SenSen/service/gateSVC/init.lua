@@ -12,7 +12,7 @@ end
 s.init = function ()
    -- skynet.fork(s.timer)
     skynet.error("Gate Service Init!")
-    s.get_ds_addr.get_ds_addr(1)
+    s.resp.get_ds_addr(1)
 end
 
 
