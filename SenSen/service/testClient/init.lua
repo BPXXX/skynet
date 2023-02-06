@@ -13,14 +13,12 @@ local request = host:attach(sproto.new(proto.c2s))
 
 local fd = assert(socket.connect("127.0.0.1", 8001))
 
+skynet.start(function()
+   
+	skynet.error("testClient Init")
+    local cmd = "TestTest"
+	socket.send(fd, cmd)
+	skynet.exit()
+end)
 
 
-while true do
-	local cmd = socket.readstdin()
-	if cmd then
-        skynet.error("Client Send Send: " .. cmd)
-		socket.send(fd, cmd)
-	else
-		socket.usleep(100)
-	end
-end
