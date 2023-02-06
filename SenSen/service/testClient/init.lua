@@ -1,5 +1,4 @@
-package.cpath = "luaclib/?.so"
-package.path = "lualib/?.lua;examples/?.lua"
+
 local skynet = require "skynet"
 if _VERSION ~= "Lua 5.4" then
 	error "Use lua 5.4"
