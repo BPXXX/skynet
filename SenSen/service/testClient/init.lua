@@ -5,11 +5,7 @@ if _VERSION ~= "Lua 5.4" then
 end
 
 local socket = require "client.socket"
-local proto = require "proto"
-local sproto = require "sproto"
 
-local host = sproto.new(proto.s2c):host "package"
-local request = host:attach(sproto.new(proto.c2s))
 
 local fd = assert(socket.connect("127.0.0.1", 8001))
 
