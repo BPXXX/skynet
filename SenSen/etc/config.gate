@@ -13,4 +13,4 @@ lua_path = "./SenSen/etc/?.lua;" .. "./lualib/?.lua;" .. "./SenSen/lualib/?.lua;
 
 lua_cpath = "./luaclib/?.so;" .. "./SenSen/luaclib/?.so"
 
-node = "gateSVC"
+node = "gate"

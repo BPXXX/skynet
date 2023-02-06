@@ -2,7 +2,8 @@ local skynet = require "skynet"
 local cluster = require "skynet.cluster"
 require "skynet.manager"
 skynet.start(function()
-	skynet.error("[start main] hello world")
+    local mynode = skynet.getenv("node")
+	skynet.error("[start main] hello world"..mynode)
 	
 		-- 集群配置
         cluster.reload({
@@ -10,7 +11,7 @@ skynet.start(function()
             dsContainer = "127.0.0.1:7576",
         })
 
-        local mynode = skynet.getenv("node")
+
         if "gate" == mynode then
             -- 启动集群节点
             cluster.open("gate")
