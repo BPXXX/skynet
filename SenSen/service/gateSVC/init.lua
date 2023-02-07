@@ -29,7 +29,7 @@ end
 
 
 s.resp.get_ds_addr = function(type)
-	print(cluster.call("dsContainer", "dsMgr1", "get_ds_addr", "type"))
+	print( s.call("dsContainer", "dsMgr1", "get_ds_addr", type))
 end
 
 s.start(...)
