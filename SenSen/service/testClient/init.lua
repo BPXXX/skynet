@@ -17,16 +17,29 @@ skynet.start(function()
 	skynet.exit()
 end)
 
-
-while true do
-    local r = socket.recv(fd)
-
-    if not r then
-		return 
-	end
-    if r == "" then
-		error "Server closed"
-        return 
-	end
-    skynet.error("recv " ..r)
+function TickRecv()
+    while true do
+        local r = socket.recv(fd)
+    
+        if not r then
+            return 
+        end
+        if r == "" then
+            error "Server closed"
+            return 
+        end
+        skynet.error("recv " ..r)
+    end
 end
+
+
+
+skynet.start(function()
+    local mynode = skynet.getenv("node")
+	skynet.error("[start testClient] hello world"..mynode)
+    skynet.fork(function()
+        TickRecv()
+        skynet.exit()
+    end)
+
+end)
