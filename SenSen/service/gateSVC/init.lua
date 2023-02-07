@@ -23,8 +23,6 @@ s.init = function ()
     local lID = socket.listen(addr)
     assert(lID)
     socket.start(lID, accept)
-
-    s.resp.get_ds_addr(1)
 end
 
 
