@@ -14,6 +14,9 @@ skynet.start(function()
 	skynet.error("testClient Init")
     local cmd = "TestTest"
 	socket.send(fd, cmd)
+    skynet.fork(function()
+        TickRecv()
+    end)
 	skynet.exit()
 end)
 
@@ -32,14 +35,3 @@ function TickRecv()
     end
 end
 
-
-
-skynet.start(function()
-    local mynode = skynet.getenv("node")
-	skynet.error("[start testClient] hello world"..mynode)
-    skynet.fork(function()
-        TickRecv()
-        skynet.exit()
-    end)
-
-end)
