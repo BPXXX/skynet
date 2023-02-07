@@ -12,9 +12,7 @@ local fd = assert(socket.connect("127.0.0.1", 8001))
 skynet.start(function()
    
 	skynet.error("testClient Init")
-    skynet.fork(function()
-        TickRecv()
-    end)
+    skynet.fork(TickRecv)
     local cmd = "TestTest"
 	socket.send(fd, cmd)
 	skynet.exit()
@@ -23,8 +21,8 @@ end)
 function TickRecv()
     while true do
         local r = socket.recv(fd)
-    
         if not r then
+            skynet.error("recv error" )
             return 
         end
         if r == "" then
