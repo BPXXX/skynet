@@ -12,11 +12,11 @@ local fd = assert(socket.connect("127.0.0.1", 8001))
 skynet.start(function()
    
 	skynet.error("testClient Init")
-    local cmd = "TestTest"
-	socket.send(fd, cmd)
     skynet.fork(function()
         TickRecv()
     end)
+    local cmd = "TestTest"
+	socket.send(fd, cmd)
 	skynet.exit()
 end)
 
