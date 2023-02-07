@@ -18,3 +18,15 @@ skynet.start(function()
 end)
 
 
+while true do
+    local r = socket.recv(fd)
+
+    if not r then
+		return 
+	end
+    if r == "" then
+		error "Server closed"
+        return 
+	end
+    skynet.error("recv " ..r)
+end
