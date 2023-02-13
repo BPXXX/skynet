@@ -3,6 +3,7 @@ local socket    = require "skynet.socket"
 local websocket = require "http.websocket"
 
 local handle = {}
+local CMD = {}
 local cID, addr = ...
 cID = tonumber(cID)
 
@@ -46,7 +47,13 @@ function echo(cID, addr)
 
 end
 
+function CMD.Echo (conf)
+    if conf.ws_id then
+        local msg = "Server Echo!!"
+        websocket.write(conf.ws_id, msg)
+    end
 
+end
 
 
 local function send_package(pack)
@@ -55,13 +62,11 @@ end
 
 
 skynet.start(function ()
-    skynet.dispatch("lua", function (_,_, id, protocol, addr)
-        print("socketAgent Start")
-        local ok, err = websocket.accept(id, handle, protocol, addr)
-        if not ok then
-            print(err)
-        end
-    end)
+	skynet.dispatch("lua", function(_,_, command, ...)
+		skynet.trace()
+		local f = CMD[command]
+		skynet.ret(skynet.pack(f(...)))
+	end)
 end)
 -- skynet.start(function()
 --     skynet.fork(function()

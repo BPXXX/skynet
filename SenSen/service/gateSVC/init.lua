@@ -4,13 +4,15 @@ local cluster = require "skynet.cluster"
 require "skynet.manager"
 local s = require "service"
 local gateAddr = "0.0.0.0:8001"
+local Agent = {};
 s.money = 0
 s.isworking = false
 s.WSAgent  = nil
-function on_connected(cID, addr)
+function on_connected(fd, addr)
     skynet.error("Gate:  "..addr .. " accepted")
-    if (s.WSAgent == nil) then
-        s.WSAgent = skynet.newservice("socketAgent", cID, addr)
+    if (Agent[fd] == nil) then
+        Agent[fd] = skynet.newservice("socketAgent", fd, addr)
+        skynet.call(Agent[fd], "lua", "Echo", { cAddr = addr ,ws_id = fd})
     end 
 end
 
