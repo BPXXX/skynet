@@ -6,9 +6,12 @@ local s = require "service"
 
 s.money = 0
 s.isworking = false
+s.WSAgent  = nil
 function accept(cID, addr)
     skynet.error(addr .. " accepted")
-    skynet.newservice("socketAgent", cID, addr)
+    if (s.WSAgent == nil) then
+        s.WSAgent = skynet.newservice("socketAgent", cID, addr)
+    end 
 end
 
 s.update = function(frame)
