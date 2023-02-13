@@ -1,5 +1,6 @@
 local skynet = require "skynet"
 local socket    = require "skynet.socket"
+local websocket = require "http.websocket"
 local cluster = require "skynet.cluster"
 require "skynet.manager"
 local s = require "service"
@@ -9,19 +10,18 @@ s.money = 0
 s.isworking = false
 s.WSAgent  = nil
 function on_accept(cID, addr)
-    -- skynet.error("Gate:  "..addr .. " accepted")
-    -- if (Agent[fd] == nil) then
-    --     Agent[fd] = skynet.newservice("socketAgent", fd, addr)
-    --     skynet.call(Agent[fd], "lua", "Accept", { cAddr = addr ,ws_id = fd})
-    -- end 
+    skynet.error("Gate:  "..addr .. " accepted")
+    if (Agent[cID] == nil) then
+        Agent[cID] = skynet.newservice("simplewebsocket","agent")
+    end 
 
-   Echo(cID,addr)
+  -- Echo(cID,addr)
 end
 
 function Echo(cID,addr)
     print("Server Start Echo!")
     socket.start(cID)
-    socket.write(cID,"Hello This is Serer!")
+    websocket.write(cID,"Hello This is Serer!")
 end
 
 
