@@ -44,21 +44,6 @@ end
 
 function echo(cID, addr)
 
-
-
-
-    -- socket.start(cID)
-    -- while true do
-    --     local str = socket.read(cID)
-    --     if str then
-    --         skynet.error("recv " ..str)
-    --         socket.write(cID, string.upper(str))  
-    --     else
-    --         socket.close(cID)
-    --         skynet.error(addr .. " disconnect")
-    --         return
-    --     end
-    -- end
 end
 
 
@@ -71,6 +56,7 @@ end
 
 skynet.start(function ()
     skynet.dispatch("lua", function (_,_, id, protocol, addr)
+        print("socketAgent Start")
         local ok, err = websocket.accept(id, handle, protocol, addr)
         if not ok then
             print(err)
