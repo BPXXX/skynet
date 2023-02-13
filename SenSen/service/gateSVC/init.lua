@@ -15,7 +15,7 @@ function on_accept(cID, addr)
     --     skynet.call(Agent[fd], "lua", "Accept", { cAddr = addr ,ws_id = fd})
     -- end 
 
-    skynet.fork(echo, cID, addr)
+   Echo(cID,addr)
 end
 
 function Echo(cID,addr)
