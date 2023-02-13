@@ -8,16 +8,22 @@ local Agent = {};
 s.money = 0
 s.isworking = false
 s.WSAgent  = nil
-function on_connected(fd, addr)
-    skynet.error("Gate:  "..addr .. " accepted")
-    if (Agent[fd] == nil) then
-        Agent[fd] = skynet.newservice("socketAgent", fd, addr)
-        skynet.call(Agent[fd], "lua", "Echo", { cAddr = addr ,ws_id = fd})
-    end 
+function on_accept(cID, addr)
+    -- skynet.error("Gate:  "..addr .. " accepted")
+    -- if (Agent[fd] == nil) then
+    --     Agent[fd] = skynet.newservice("socketAgent", fd, addr)
+    --     skynet.call(Agent[fd], "lua", "Accept", { cAddr = addr ,ws_id = fd})
+    -- end 
+
+    skynet.fork(echo, cID, addr)
 end
 
-s.update = function(frame)
+function Echo(cID,addr)
+
+    socket.start(cID)
+    socket.write(cID,"Hello This is Serer!")
 end
+
 
 s.init = function ()
    -- skynet.fork(s.timer)
@@ -27,7 +33,7 @@ s.init = function ()
     skynet.error("listen " .. gateAddr)
     local lID = socket.listen(gateAddr)
     assert(lID)
-    socket.start(lID, on_connected)
+    socket.start(lID, on_accept)
 end
 
 

@@ -4,6 +4,7 @@ local websocket = require "http.websocket"
 
 local handle = {}
 local CMD = {}
+local Clients = {}
 local cID, addr = ...
 cID = tonumber(cID)
 
@@ -47,10 +48,26 @@ function echo(cID, addr)
 
 end
 
+function CMD.Accept (conf)
+    if Clients[conf.ws_id] == nil then
+        if conf.ws_id then
+            local msg = "SocketAgent Server Accept!!"
+            websocket.accept(conf.ws_id, handle,"ws") 
+            local ok, err = websocket.accept(conf.ws_id, handle, "ws", conf.cAddr)
+            if not ok then
+                print(err)
+            end
+        else
+            print("SocketAgent Accept Failed:ws_id is nil!")
+        end
+    end
+end
+
 function CMD.Echo (conf)
     if conf.ws_id then
-        local msg = "Server Echo!!"
-        websocket.write(conf.ws_id, msg)
+        if Clients[conf.ws_id] then
+            websocket.write(conf.ws_id,"Server Echo","ws")
+        end
     end
 
 end
