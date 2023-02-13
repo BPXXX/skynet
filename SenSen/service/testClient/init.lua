@@ -15,11 +15,9 @@ local function TickRecv()
         local r = socket.recv(fd)
         if not r then
             skynet.error("recv error" )
-            return 
         end
         if r == "" then
             error "Server closed"
-            return 
         end
         skynet.error("recv " ..r)
     end
@@ -29,7 +27,7 @@ skynet.start(function()
 
 	skynet.error("testClient Init")
     skynet.fork(TickRecv)
-    local cmd = "TestTest"
+    local cmd = "testtest"
 	socket.send(fd, cmd)
 	skynet.exit()
 end)
