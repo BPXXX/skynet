@@ -19,7 +19,7 @@ function on_accept(cID, addr)
 end
 
 function Echo(cID,addr)
-
+    print("Server Start Echo!")
     socket.start(cID)
     socket.write(cID,"Hello This is Serer!")
 end
