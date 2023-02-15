@@ -45,6 +45,7 @@ if MODE == "agent" then
     skynet.start(function ()
         skynet.dispatch("lua", function (_,_, id, protocol, addr)
             local ok, err = websocket.accept(id, handle, protocol, addr)
+            print("Server Dispatch".."id:"..id.."protocol"..protocol)
             if not ok then
                 print(err)
             end
@@ -79,7 +80,7 @@ else
         end
         local balance = 1
         local protocol = "ws"
-        local id = socket.listen("0.0.0.0", 9948)
+        local id = socket.listen("0.0.0.0", 8001)
         skynet.error(string.format("Listen websocket port 9948 protocol:%s", protocol))
         socket.start(id, function(id, addr)
             print(string.format("accept client socket_id: %s addr:%s", id, addr))
