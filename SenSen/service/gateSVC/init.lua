@@ -12,7 +12,7 @@ s.WSAgent  = nil
 function on_accept(cID, addr)
     skynet.error("Gate:  "..addr .. " accepted")
     if (Agent[cID] == nil) then
-        Agent[cID] = skynet.newservice("simplewebsocket","server")
+        Agent[cID] = skynet.newservice("simplewebsocket","agent")
         skynet.send(Agent[cID], "lua", cID,"ws",addr)
     end 
 
