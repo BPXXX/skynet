@@ -1,45 +1,61 @@
 local skynet = require "skynet"
-local socket    = require "skynet.socket"
-local websocket = require "http.websocket"
-local cluster = require "skynet.cluster"
-require "skynet.manager"
+local socket = require "skynet.socket"
+local websocket = require "websocket"
+local httpd = require "http.httpd"
+local urllib = require "http.url"
+local sockethelper = require "http.sockethelper"
 local s = require "service"
-local gateAddr = "0.0.0.0:8001"
-local Agent = {};
-s.money = 0
-s.isworking = false
-s.WSAgent  = nil
-function on_accept(cID, addr)
-    skynet.error("Gate:  "..addr .. " accepted")
-    if (Agent[cID] == nil) then
-        Agent[cID] = skynet.newservice("simplewebsocket","agent")
-        skynet.send(Agent[cID], "lua", cID,"ws",addr)
-    end 
 
-  -- Echo(cID,addr)
+local handler = {}
+function handler.on_open(ws)
+    print(string.format("%d::open", ws.id))
 end
 
-function Echo(cID,addr)
-    print("Server Start Echo!")
-    socket.start(cID)
-    websocket.write(cID,"Hello This is Serer!")
+function handler.on_message(ws, message)
+    print(string.format("%d receive:%s", ws.id, message))
+    ws:send_text(message .. "from server")
+    ws:close()
 end
 
+function handler.on_close(ws, code, reason)
+    print(string.format("%d close:%s  %s", ws.id, code, reason))
+end
+
+local function handle_socket(id)
+    -- limit request body size to 8192 (you can pass nil to unlimit)
+    
+    local code, url, method, header, body = httpd.read_request(sockethelper.readfunc(id), 8192)
+    if(header == nil) then 
+        print(string.format("handle_socket :header is nil"))
+    end
+    if code then
+        
+        if header.upgrade == "websocket" then
+            local ws = websocket.new(id, header, handler)
+            ws:start()
+        end
+    end
+
+
+end
 
 s.init = function ()
-   -- skynet.fork(s.timer)
-    skynet.error("Gate Service Init!")
-    -- 监听8001端口
-
-    skynet.error("listen " .. gateAddr)
-    local lID = socket.listen(gateAddr)
-    assert(lID)
-    socket.start(lID, on_accept)
+    local address = "0.0.0.0:8001"
+    skynet.error("Listening "..address)
+    local id = assert(socket.listen(address))
+    socket.start(id , function(id, addr)
+       socket.start(id)
+       pcall(handle_socket, id)
+    end)
 end
 
 
-s.resp.get_ds_addr = function(type)
-	print( s.call("dsContainer", "dsMgr1", "get_ds_addr", type))
+---------------------------------------------------------------------------------------------
+--------------------------------------Cluster Calls------------------------------------------
+---------------------------------------------------------------------------------------------
+s.gate_getMapList = function ()
+    return s.call("dsContainer","dsMgr1","get_room_list")
 end
+
 
 s.start(...)
