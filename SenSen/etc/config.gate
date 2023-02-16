@@ -2,7 +2,7 @@ thread = 8
 cpath = "././cservice/?.so"
 bootstrap = "snlua bootstrap"
 
-start = "simplewebsocket"
+start = "main"
 harbor = 0
 
 lualoader = "./lualib/loader.lua"

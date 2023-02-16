@@ -5,7 +5,8 @@ local httpd = require "http.httpd"
 local urllib = require "http.url"
 local sockethelper = require "http.sockethelper"
 local s = require "service"
-
+local cjson = require"cjson"
+local cjson2 = cjson.new()
 local handler = {}
 function handler.on_open(ws)
     print(string.format("%d::open", ws.id))
@@ -13,7 +14,15 @@ end
 
 function handler.on_message(ws, message)
     print(string.format("%d receive:%s", ws.id, message))
-    ws:send_text(message .. "from server")
+    local msg = 
+{
+["name"] = "feng",
+    ["age"] = 23,
+    ["addr"] = "GuangZhou",
+    ["email"] = "feng9662@qq.com",
+    ["tel"] = "18866668888"
+}
+    ws:send_text(cjson2.encode(msg))
     ws:close()
 end
 
