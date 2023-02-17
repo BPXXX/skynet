@@ -14,14 +14,7 @@ end
 
 function handler.on_message(ws, message)
     print(string.format("%d receive:%s", ws.id, message))
-    local msg = 
-{
-["name"] = "feng",
-    ["age"] = 23,
-    ["addr"] = "GuangZhou",
-    ["email"] = "feng9662@qq.com",
-    ["tel"] = "18866668888"
-}
+    local msg = s.gate_getMapList()
     ws:send_text(cjson2.encode(msg))
     ws:close()
 end
