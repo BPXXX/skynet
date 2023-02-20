@@ -2,9 +2,10 @@ local skynet = require "skynet"
 local socket = require "skynet.socket"
 local websocket = require "websocket"
 local httpd = require "http.httpd"
-local urllib = require "http.url"
+local MsgLib = require"webMsg"
 local sockethelper = require "http.sockethelper"
 local s = require "service"
+local enums = require"enums"
 local cjson = require"cjson"
 local cjson2 = cjson.new()
 local handler = {}
@@ -14,8 +15,21 @@ end
 
 function handler.on_message(ws, message)
     print(string.format("%d receive:%s", ws.id, message))
-    local msg = s.gate_getMapList()
-    ws:send_text(cjson2.encode(msg))
+    local recMsg = cjson2.decode(message)
+    local MsgEnum = enums.EWebMsgType
+    local recType = recMsg.msgType
+    local reply;
+    if recType == nil  then
+    elseif recType == MsgEnum.MSG_None then
+        local reply;
+        reply = MsgLib.MakeWebMsg(MsgEnum.MSG_None,"None")
+        ws:send_text(reply)
+    elseif recType == MsgEnum.MSG_Request_RoomList then
+
+        local listTbl = s.gate_getMapList()
+        reply = MsgLib.MakeWebMsg(MsgEnum.MSG_Response_RoomList,listTbl)
+        ws:send_text(reply)
+    end
     ws:close()
 end
 
