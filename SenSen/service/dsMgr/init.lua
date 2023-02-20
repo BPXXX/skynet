@@ -1,35 +1,32 @@
 local skynet = require "skynet"
-
+local roomType = require"enums".ERoomType
 local s = require "service"
 
 s.money = 0
 s.isworking = false
 s.dsMap = {
     Room1 = {
+        roomType = roomType.RType_Commercial,
+        roomName = "RoomName",
         ipAddr = "127.0.0.1",
         maxPlayer = 100,
+        curPlayer = 1
     }
     ,    
     Room2 = {
+        roomType = roomType.RType_Commercial,
+        roomName = "RoomName",
         ipAddr = "127.0.0.1",
         maxPlayer = 100,
+        curPlayer = 1
     },
     Room3 = {
+        roomType = roomType.RType_Commercial,
+        roomName = "RoomName",
         ipAddr = "127.0.0.1",
         maxPlayer = 100,
-    },
-    Room4 = {
-        ipAddr = "127.0.0.1",
-        maxPlayer = 100,
-    },
-    Room5 = {
-        ipAddr = "127.0.0.1",
-        maxPlayer = 100,
-    },
-    Room6 = {
-        ipAddr = "127.0.0.1",
-        maxPlayer = 100,
-    },
+        curPlayer = 1
+    }
 }
 s.update = function(frame)
 end
