@@ -19,13 +19,12 @@ function handler.on_message(ws, message)
     local MsgEnum = enums.EWebMsgType
     local recType = recMsg.msgType
     local reply;
-    if recType == nil  then
-    elseif recType == MsgEnum.MSG_None then
+    assert(recType~=nil,"message type is nil.")
+    if recType == MsgEnum.MSG_None then
         local reply;
         reply = MsgLib.MakeWebMsg(MsgEnum.MSG_None,"None")
         ws:send_text(reply)
     elseif recType == MsgEnum.MSG_Request_RoomList then
-
         local listTbl = s.gate_getMapList()
         reply = MsgLib.MakeWebMsg(MsgEnum.MSG_Response_RoomList,listTbl)
         ws:send_text(reply)

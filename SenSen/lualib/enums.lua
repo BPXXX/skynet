@@ -14,4 +14,11 @@ tbl.EWebMsgType =
 	MSG_Response_Chat = 203
 };
 
+tbl.ERoomType = 
+{
+	RType_None = 0,
+	RType_Commercial = 1,
+	RType_Personal = 2,
+}
+
 return tbl
