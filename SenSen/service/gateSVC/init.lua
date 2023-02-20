@@ -62,6 +62,8 @@ s.init = function ()
        socket.start(id)
        pcall(handle_socket, id)
     end)
+    print(s.gate_getMapList())
+    
 end
 
 
